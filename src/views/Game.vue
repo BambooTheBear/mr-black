@@ -1,19 +1,16 @@
 <template>
     <div class="w-full h-screen flex items-center justify-center">
-        <div :class="this.classname">
-            <p class="text-lg absolute left-2 bottom-2 font-normal">{{ current.name }}: {{ current.role }}</p>
+        <div class="relative w-full h-1/3 rounded-2xl text-4xl text-base-100 font-bold flex items-center flex-col bg-accent"
+            :class="bg">
+            <p class="text-lg absolute left-2 bottom-2 font-normal">{{ this.current.name }} : {{ this.current.role }}</p>
             <p v-if="this.current.role != 'undercover' && this.current.role != 'white'">Your Word: {{ word }}</p>
             <p v-if="this.current.role == 'undercover'">Your Word: {{ word2 }}</p>
+            <p v-if="this.current.role == 'white'" class="text-6xl">Mr. WHITE</p>
 
             <button class="btn btn-primary absolute bottom-2 right-2" @click="this.next">Next</button>
         </div>
         <button class="absolute bottom-0 btn btn-secondary btn-outline"
             @click="{ this.create(); this.game.playing = false }">Restart</button>
-    </div>
-    <div v-if="false"
-        class="relative w-full h-1/3 rounded-2xl bg-accent text-4xl text-base-100 font-bold flex items-center flex-col">
-        <div class="bg-slate-400"></div>
-        <div class="bg-secondary"></div>
     </div>
 </template>
 <script>
@@ -21,24 +18,26 @@ import { game } from "../utils/GameHandler"
 export default {
     methods: {
         next() {
-            this.current = this.remaining.pop()
+            let tmp = this.remaining.pop()
+            this.current.name = tmp.name
+            this.current.role = tmp.role
             console.log(this.remaining)
             console.log(this.current)
             if (this.current.role == "white") {
-                this.classname = "relative w-full h-1/3 rounded-2xl bg-white text-4xl text-base-100 font-bold flex items-center flex-col"
+                this.bg = "bg-white"
             }
             if (this.current.role == "black") {
-                this.classname = "relative w-full h-1/3 rounded-2xl bg-slate-400 text-4xl text-base-100 font-bold flex items-center flex-col"
+                this.bg = "bg-primary"
             }
-            if (this.current.role = "undercover") {
-                this.classname = "relative w-full h-1/3 rounded-2xl bg-secondary text-4xl text-base-100 font-bold flex items-center flex-col"
+            if (this.current.role == "undercover") {
+                this.bg = "bg-secondary"
             }
         },
         create() {
             this.remaining = JSON.parse(JSON.stringify(game.players))
             console.log(this.remaining)
             this.remaining.sort(() => Math.random() - 0.5);
-            this.current = this.remaining.pop()
+            this.current.name = this.remaining.pop().name
             let whiteNumber = Math.floor(Math.random() * this.remaining.length)
             let blackNumber = Math.floor(Math.random() * this.remaining.length)
             while (blackNumber == whiteNumber) {
@@ -80,7 +79,7 @@ export default {
             word2: "",
             wordList: [["Apfel", "Birne"], ["Baum", "Blume"]],
             remaining: [],
-            classname: "relative w-full h-1/3 rounded-2xl bg-accent text-4xl text-base-100 font-bold flex items-center flex-col"
+            bg: "bg-accent"
         }
     },
     created() {
