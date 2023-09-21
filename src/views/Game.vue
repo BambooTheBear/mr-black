@@ -50,7 +50,7 @@ export default {
             console.log(this.remaining)
             this.remaining.sort(() => Math.random() - 0.5);
             this.current = { name: "Give next player: " + this.remaining[this.remaining.length - 1].name, role: "next" }
-            let whiteNumber = Math.floor(Math.random() * this.remaining.length - 1)
+            let whiteNumber = Math.floor(Math.random() * this.remaining.length)
             let blackNumber = Math.floor(Math.random() * this.remaining.length)
             while (blackNumber == whiteNumber) {
                 blackNumber = Math.floor(Math.random() * this.remaining.length)
