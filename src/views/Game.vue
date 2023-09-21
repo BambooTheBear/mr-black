@@ -18,7 +18,12 @@ import { game } from "../utils/GameHandler"
 export default {
     methods: {
         next() {
-            let tmp = this.remaining.pop()
+            this.x++
+            if (this.x%2==0) {
+                 let tmp = {name: "Give next player", role: "next"}
+            }
+            else {
+            let tmp = this.remaining.pop()}
             this.current.name = tmp.name
             this.current.role = tmp.role
             console.log(this.remaining)
@@ -31,6 +36,9 @@ export default {
             }
             if (this.current.role == "undercover") {
                 this.bg = "bg-secondary"
+            }
+            if (this.current.role == "next") {
+                this.bg = "bg-white"
             }
         },
         create() {
@@ -180,7 +188,8 @@ export default {
   ["Apple", "Pineapple"]
 ],
             remaining: [],
-            bg: "bg-accent"
+            bg: "bg-accent",
+            x:0,
         }
     },
     created() {
