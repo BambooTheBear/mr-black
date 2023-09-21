@@ -9,7 +9,7 @@
 
             <button class="btn btn-primary absolute bottom-2 right-2" @click="this.next">Next</button>
         </div>
-        <button class="absolute bottom-0 btn btn-secondary btn-outline"
+        <button class="absolute bottom-0 btn btn-secondary btn-outline scale-[2]"
             @click="{ this.create(); this.game.playing = false }">Restart</button>
     </div>
 </template>
